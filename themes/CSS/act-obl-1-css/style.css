@@ -1,0 +1,36 @@
+* {
+  box-sizing: border-box;
+}
+
+/*.container {
+  font-size: 3rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin: 1.5rem;
+  max-width: 1250px;
+}*/
+
+.container {
+  font-size: 3rem;
+  display: flex;
+  gap: 1rem;
+  margin: 1.5rem;
+  max-width: 1250px;
+}
+
+.box {
+  height: 300px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.box1 {
+  background-color: red;
+  color: gold;
+}
+
+.box2 {
+  background-color: black;
+  color: white;
+}

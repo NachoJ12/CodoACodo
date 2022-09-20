@@ -1,0 +1,55 @@
+.bg-grey {
+  background-color: #353a40;
+}
+.btn-tickets {
+  background-color: #29a744;
+}
+
+.link-tickets {
+  color: #29a744;
+}
+.link-tickets:hover {
+  color: #10df36;
+}
+.brightness-50 {
+  filter: brightness(0.5);
+}
+.btn-send {
+  background-color: #96c93e;
+  color: white;
+}
+.btn-send:hover {
+  outline: 1px solid #96c93e;
+  font-weight: 500;
+}
+footer {
+  background-color: #1e516e;
+}
+.footer-nav a {
+  color: white;
+}
+.footer-nav a:hover {
+  color: rgba(255, 255, 255, 0.75);
+}
+@media (min-width: 1200px) {
+  .carousel-text-special {
+    text-align: right;
+    width: 40%;
+    top: 40%;
+    left: 50%;
+    font-size: 1.3rem;
+  }
+}
+@media (max-width: 768px) {
+  .carousel-caption {
+    display: block !important;
+    right: 5%;
+    left: 5%;
+  }
+  .carousel-caption > h2 {
+    font-size: calc(1rem + 0.9vw);
+  }
+  .carousel-text-special {
+    font-size: 1em;
+  }
+}
