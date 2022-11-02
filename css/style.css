@@ -166,6 +166,10 @@ p {
   transition: all 1s;
 }
 
+.mt-15px {
+  margin-top: 15px;
+}
+
 .theme i {
   font-size: 4rem;
   transition: transform 0.8s ease-in-out;
@@ -173,6 +177,11 @@ p {
 
 .theme i:hover {
   transform: rotate3d(0, 1, 0, 360deg);
+}
+
+.small {
+  font-size: smaller;
+  padding: 0;
 }
 
 /*footer*/
