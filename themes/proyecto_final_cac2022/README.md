@@ -8,6 +8,9 @@
 
 Todos los estilos fueron realizados con bootstrap, exceptuando el home que explicitamente fue requerido hacerlo con css vanilla.
 
+## Video
+[![Video muestra del proyecto]](https://user-images.githubusercontent.com/85445806/209583086-f8e67458-d885-49d7-9c04-ca5b4b686cb5.mp4)
+
 ## Tecnologías utilizadas
 
 ---
