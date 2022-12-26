@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <meta name="generator" content="" />
+    <title>Registro de Pedido</title>
+
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+    <!-- Google Material Icons (Fonts Google Icons) -->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="./css/form-validation.css" rel="stylesheet" />
+  </head>
+
+  <body class="container-fluid bg-light">
+    <a
+      href="/webProyectCac/index.html"
+      class="float-left previous btn btn-secondary mx-auto mt-3"
+      role="button"
+    >
+      Volver a home
+    </a>
+    <div class="pb-5 pt-2 text-center">
+      <img
+        class="d-block mx-auto mb-4"
+        src="./images/logo.jpg"
+        alt=""
+        width="72"
+        height="72"
+      />
+      <h2>Formulario de Pedido</h2>
+      <p class="lead">La fecha de entrega será coordinada telefónicamente.</p>
+    </div>
+
+    <div class="col-sm-11 mx-auto text-center">
+      <h4 class="mb-3">Tu pedido</h4>
+      <form class="needs-validation" novalidate action="pedido" method="post">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="inputFirstName">Nombre</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputFirstName"
+              name="inputFirstName"
+              placeholder="Tu nombre"
+              value=""
+              required
+            />
+            <div class="invalid-feedback">Faltó ingresar el nombre.</div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="inputLastName">Apellido</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputLastName"
+              name="inputLastName"
+              placeholder="Tu apellido"
+              value=""
+              required
+            />
+            <div class="invalid-feedback">Faltó ingresar el apellido.</div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="inputUsername"
+            >Nombre de Usuario
+            <!--<span class="text-muted">(Optional)</span>--></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="inputUsername"
+            name="inputUsername"
+            placeholder="Usuario"
+            required
+          />
+          <div class="invalid-feedback" style="width: 100%">
+            Faltó ingresar el usuario.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="inputEmail">Email </label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">@</span>
+            </div>
+            <input
+              type="email"
+              class="form-control"
+              id="inputEmail"
+              name="inputEmail"
+              placeholder="tuemail@gmail.com"
+              required
+            />
+            <div class="invalid-feedback">El Email parece inválido.</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="inputAddress">Lugar de Entrega</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputAddress"
+            name="inputAddress"
+            placeholder="Calle y número"
+            required
+          />
+          <div class="invalid-feedback">
+            Faltó ingresar el domicilio de entrega.
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-5 mb-3">
+            <label for="selectProvinceId">Provincia</label>
+            <select
+              class="form-select d-block w-100"
+              id="selectProvinceId"
+              name="selectProvinceId"
+              required
+            >
+              <option value="">Seleccioná...</option>
+              <option value="1">Buenos Aires</option>
+              <option value="2">Mendoza</option>
+            </select>
+            <div class="invalid-feedback">Seleccioná una provincia válida.</div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="selectLocalityId">Localidad</label>
+            <select
+              class="form-select d-block w-100"
+              id="selectLocalityId"
+              name="selectLocalityId"
+              required
+            >
+              <option value="">Seleccioná...</option>
+              <option value="1">Moreno</option>
+              <option value="2">Olivos</option>
+              <option value="3">Guaymallén</option>
+            </select>
+            <div class="invalid-feedback">Seleccioná una localidad válida.</div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="inputZipCode">Cod.Postal</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputZipCode"
+              name="inputZipCode"
+              placeholder=""
+              required
+            />
+            <div class="invalid-feedback">Faltó ingresar el Código Postal.</div>
+          </div>
+        </div>
+
+        <hr class="mb-6" />
+
+        <h4 class="mb-3">Forma de Pago</h4>
+
+        <div class="d-block my-3">
+          <div class="custom-control custom-radio">
+            <input
+              id="credit"
+              name="inputPaymentMethod"
+              type="radio"
+              class="custom-control-input"
+              value="1"
+              checked
+              required
+            />
+            <label class="custom-control-label" for="credit"
+              >Tarjeta de Crédito</label
+            >
+          </div>
+          <div class="custom-control custom-radio">
+            <input
+              id="debit"
+              name="inputPaymentMethod"
+              type="radio"
+              class="custom-control-input"
+              value="2"
+              required
+            />
+            <label class="custom-control-label" for="debit">Mercado Pago</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="inputCardName">Nombre del Titular de la Tarjeta</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputCardName"
+              name="inputCardName"
+              placeholder=""
+              required
+            />
+            <small class="text-muted"
+              >Nombre como se muestra en la tarjeta</small
+            >
+            <div class="invalid-feedback">El nombre debe ser ingresado.</div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="inputCardNumber">Número de la tarjeta</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputCardNumber"
+              name="inputCardNumber"
+              placeholder=""
+              required
+            />
+            <small class="text-muted">Sin espacios ni guiones</small>
+            <div class="invalid-feedback">El n° es obligatorio.</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 mb-3"></div>
+          <div class="col-md-3 mb-3">
+            <label for="inputCardExpiration">Fecha de Vto.</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputCardExpiration"
+              name="inputCardExpiration"
+              placeholder="08/23"
+              required
+            />
+            <div class="invalid-feedback">Falta ingresar la fecha de Vto.</div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="inputCardCvv">Código</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputCardCvv"
+              name="inputCardCvv"
+              placeholder="123"
+              required
+            />
+            <div class="invalid-feedback">N° de seguridad obligatorio.</div>
+          </div>
+        </div>
+        <hr class="mb-4" />
+        <div class="row justify-content-center">
+          <div class="col-sm-4">
+            <button class="btn btn-danger btn-lg btn-block" type="submit">
+              Ingresar la Solicitud
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+      <p class="mb-1">&copy; 2022-2023 Codo a Codo</p>
+    </footer>
+
+    <script src="./js/form-validation.js"></script>
+  </body>
+</html>
