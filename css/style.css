@@ -149,7 +149,7 @@ p {
   width: 100%;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
-
+  padding-top: 0.5rem;
   font-size: 6rem;
 }
 
