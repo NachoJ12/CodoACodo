@@ -72,6 +72,7 @@ header {
   left: 1rem;
   border-radius: 20px;
   background-color: rgb(109, 106, 204);
+  width: fit-content;
 }
 
 @media (max-width: 560px) {
@@ -110,6 +111,55 @@ header {
 .description > h1,
 p {
   padding: 0.5rem;
+}
+
+/* list courses */
+.listCourses {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* courses */
+.coursesCard {
+  display: flex;
+  flex-direction: column;
+  color: var(--color-grey);
+  background-color: var(--color-white);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 1) 10%,
+    rgba(148, 187, 233, 1) 100%
+  );
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  transition: all 0.5s ease-in-out;
+}
+
+.coursesCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgb(0 0 0 / 0.25);
+  cursor: pointer;
+}
+
+.coursesCard > i {
+  width: 100%;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+
+  font-size: 6rem;
+}
+
+.containerCoursesDescription {
+  padding: 0 14px 5px;
+}
+
+.coursesDescription {
+  opacity: 0.6;
+  font-size: 18px;
 }
 
 /* list themes */
