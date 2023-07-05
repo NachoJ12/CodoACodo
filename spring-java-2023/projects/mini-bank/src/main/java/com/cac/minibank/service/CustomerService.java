@@ -34,6 +34,9 @@ public class CustomerService {
         customerRepository.save(customer);
     }
 
+    public Customer getCustomerById(Long id){
+        return customerRepository.findByCustomerId(id);
+    }
     public List<Customer> getCustomersByName(String name){
         return customerRepository.findCustomersByName(name);
     }

@@ -27,6 +27,11 @@ public class CustomerController {
         return ResponseEntity.ok("Customer created with Address");
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Customer> getCustomerById(@PathVariable Long id){
+        return ResponseEntity.ok(customerService.getCustomerById(id));
+    }
+
     @GetMapping("/name/{name}")
     public ResponseEntity<List<Customer>> getCustomersByName(@PathVariable String name){
         return ResponseEntity.ok(customerService.getCustomersByName(name));
