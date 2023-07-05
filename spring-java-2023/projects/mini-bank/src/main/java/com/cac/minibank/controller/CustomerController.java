@@ -6,10 +6,9 @@ import com.cac.minibank.repository.AddressRepository;
 import com.cac.minibank.repository.CustomerRepository;
 import com.cac.minibank.service.CustomerService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/customer")
@@ -26,6 +25,11 @@ public class CustomerController {
         customerService.createCustomerWithAddress(customer);
 
         return ResponseEntity.ok("Customer created with Address");
+    }
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity<List<Customer>> getCustomersByName(@PathVariable String name){
+        return ResponseEntity.ok(customerService.getCustomersByName(name));
     }
 
 

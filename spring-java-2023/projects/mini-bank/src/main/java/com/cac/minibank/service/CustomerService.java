@@ -6,6 +6,8 @@ import com.cac.minibank.repository.AddressRepository;
 import com.cac.minibank.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class CustomerService {
@@ -30,6 +32,10 @@ public class CustomerService {
 
         // Guardar el Customer junto con el Address
         customerRepository.save(customer);
+    }
+
+    public List<Customer> getCustomersByName(String name){
+        return customerRepository.findCustomersByName(name);
     }
 
 }
