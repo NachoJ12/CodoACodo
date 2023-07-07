@@ -1,6 +1,7 @@
 package com.cac.minibank.model;
 
 import com.cac.minibank.model.movement.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -40,9 +41,11 @@ public class Account {
 
     @NotNull
     @ManyToOne
+    @JsonIgnoreProperties("accounts") // Ignorar la propiedad accountHolder durante la serialización
     private Customer accountHolder; //fk
 
     @ManyToMany(mappedBy = "jointAccounts", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("jointAccounts") // Ignorar la propiedad jointAccountHolders durante la serialización
     private List<Customer> jointAccountHolders;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "account_id")
