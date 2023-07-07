@@ -1,12 +1,15 @@
 package com.cac.minibank.service;
 
+import com.cac.minibank.dto.response.CustomerResponseDTO;
 import com.cac.minibank.model.Address;
 import com.cac.minibank.model.Customer;
+import com.cac.minibank.mapper.CustomerMapper;
 import com.cac.minibank.repository.AddressRepository;
 import com.cac.minibank.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -15,9 +18,12 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
     private final AddressRepository addressRepository;
 
-    public CustomerService(CustomerRepository customerRepository, AddressRepository addressRepository) {
+    private final CustomerMapper customerMapper;
+
+    public CustomerService(CustomerRepository customerRepository, AddressRepository addressRepository, CustomerMapper customerMapper) {
         this.customerRepository = customerRepository;
         this.addressRepository = addressRepository;
+        this.customerMapper = customerMapper;
     }
 
     public void createCustomerWithAddress(Customer customer) {
@@ -34,11 +40,21 @@ public class CustomerService {
         customerRepository.save(customer);
     }
 
-    public Customer getCustomerById(Long id){
-        return customerRepository.findByCustomerId(id);
+    public CustomerResponseDTO getCustomerById(Long id){
+        Customer customer = customerRepository.findByCustomerId(id);
+
+        CustomerResponseDTO customerResponseDTO = customerMapper.toDto(customer);
+
+        return customerResponseDTO;
     }
-    public List<Customer> getCustomersByName(String name){
-        return customerRepository.findCustomersByName(name);
+    public List<CustomerResponseDTO> getCustomersByName(String name){
+        List<Customer> customers = customerRepository.findCustomersByName(name);
+
+        List<CustomerResponseDTO> customersResponseDTO = customers
+                        .stream().map(customer -> customerMapper.toDto(customer)
+                ).collect(Collectors.toList());
+
+        return customersResponseDTO;
     }
 
 }
