@@ -51,7 +51,7 @@ public class CustomerService {
         List<Customer> customers = customerRepository.findCustomersByName(name);
 
         List<CustomerResponseDTO> customersResponseDTO = customers
-                        .stream().map(customer -> customerMapper.toDto(customer)
+                        .stream().map(customerMapper::toDto
                 ).collect(Collectors.toList());
 
         return customersResponseDTO;
