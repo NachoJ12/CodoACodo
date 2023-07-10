@@ -1,5 +1,6 @@
 package com.cac.minibank.model.movement;
 
+import com.cac.minibank.model.Account;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +23,10 @@ public abstract class Movement {
     private LocalDateTime realizationDateTime;
     private BigDecimal amount;
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
 
 
     public Movement() {
