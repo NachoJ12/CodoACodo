@@ -17,8 +17,7 @@ import java.util.List;
 @Setter
 public class Customer {
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
     private Long customerId;
     @NotEmpty

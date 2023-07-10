@@ -15,9 +15,9 @@ import lombok.Setter;
 @Setter
 public class Currency {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
-    //@Column(name = "currency_id")
+    @Column(name = "currency_id")
     private Integer currencyId;
     @NotEmpty
     private String name;

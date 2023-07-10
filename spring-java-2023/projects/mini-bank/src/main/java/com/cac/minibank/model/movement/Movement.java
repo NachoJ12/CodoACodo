@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @DiscriminatorColumn(name = "dtype")
 public abstract class Movement {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long movementId;
     private LocalDateTime realizationDateTime;
     private BigDecimal amount;
