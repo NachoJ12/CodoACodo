@@ -2,7 +2,6 @@ package com.cac.minibank.controller;
 
 import com.cac.minibank.dto.request.movement.DepositAndWithdrawalRequestDTO;
 import com.cac.minibank.dto.response.MovementResponseDTO;
-import com.cac.minibank.model.movement.Movement;
 import com.cac.minibank.service.MovementService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +33,13 @@ public class MovementController {
         movementService.deposit(depositAndWithdrawalRequestDTO);
 
         return ResponseEntity.ok("Deposit succesful");
+    }
+
+    @PostMapping("/withdrawal")
+    public ResponseEntity<String> withdrawal(@RequestBody DepositAndWithdrawalRequestDTO depositAndWithdrawalRequestDTO){
+        movementService.withdrawal(depositAndWithdrawalRequestDTO);
+
+        return ResponseEntity.ok("Withdrawal succesful");
     }
 
 }

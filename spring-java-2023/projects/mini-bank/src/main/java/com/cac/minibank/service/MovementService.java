@@ -72,4 +72,31 @@ public class MovementService {
     }
 
 
+    public void withdrawal(DepositAndWithdrawalRequestDTO depositAndWithdrawalRequestDTO){
+        Account account = accountRepository.getAccountByAccountId(depositAndWithdrawalRequestDTO.getAccountId());
+        BigDecimal currentBalance = account.getCurrentBalance();
+
+        BigDecimal amountToWithdrawal = depositAndWithdrawalRequestDTO.getAmount();
+
+        if(currentBalance.compareTo(amountToWithdrawal) >= 0 &&
+                depositAndWithdrawalRequestDTO.getAmount().compareTo(BigDecimal.ZERO) >= 0){
+            DepositAndWithdrawal depositAndWithdrawal = new DepositAndWithdrawal();
+
+            depositAndWithdrawal.setRealizationDateTime(LocalDateTime.now());
+            depositAndWithdrawal.setAmount(depositAndWithdrawalRequestDTO.getAmount().negate());
+            depositAndWithdrawal.setDescription(depositAndWithdrawalRequestDTO.getDescription());
+            depositAndWithdrawal.setCashier(depositAndWithdrawalRequestDTO.getCashier());
+            depositAndWithdrawal.setAccount(account);
+
+            BigDecimal newBalance = currentBalance.subtract(amountToWithdrawal);
+            accountService.updateBalance(depositAndWithdrawalRequestDTO.getAccountId(), newBalance);
+
+            movementRepository.save(depositAndWithdrawal);
+        } else {
+            throw new RuntimeException("No dispone saldo suficiente o ingreso numero menor a 0");
+        }
+
+    }
+
+
 }
