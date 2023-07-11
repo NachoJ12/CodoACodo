@@ -90,5 +90,10 @@ public class AccountService {
 
     }
 
+    public void updateBalance(Long id, BigDecimal balance) {
+        var account = accountRepository.getAccountByAccountId(id);
+        account.setCurrentBalance(balance);
+        accountRepository.save(account);
+    }
 
 }
