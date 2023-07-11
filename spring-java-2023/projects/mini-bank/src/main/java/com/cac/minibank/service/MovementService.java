@@ -1,22 +1,31 @@
 package com.cac.minibank.service;
 
+import com.cac.minibank.dto.request.movement.DepositAndWithdrawalRequestDTO;
 import com.cac.minibank.dto.response.MovementResponseDTO;
 import com.cac.minibank.mapper.MovementMapper;
+import com.cac.minibank.model.Account;
 import com.cac.minibank.model.movement.*;
+import com.cac.minibank.repository.AccountRepository;
 import com.cac.minibank.repository.MovementRepository;
 import org.springframework.stereotype.Service;
 
-
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class MovementService {
     private final MovementRepository movementRepository;
+    private final AccountRepository accountRepository;
+
+    private final AccountService accountService;
     private final MovementMapper movementMapper;
 
-    public MovementService(MovementRepository movementRepository, MovementMapper movementMapper) {
+    public MovementService(MovementRepository movementRepository, AccountRepository accountRepository, AccountService accountService, MovementMapper movementMapper) {
         this.movementRepository = movementRepository;
+        this.accountRepository = accountRepository;
+        this.accountService = accountService;
         this.movementMapper = movementMapper;
     }
 
@@ -38,6 +47,29 @@ public class MovementService {
         return movementResponseDTOs;
     }
 
+    public void deposit(DepositAndWithdrawalRequestDTO depositAndWithdrawalRequestDTO){
+
+        if(depositAndWithdrawalRequestDTO.getAmount().compareTo(BigDecimal.ZERO) >= 0){
+            Account account = accountRepository.getAccountByAccountId(depositAndWithdrawalRequestDTO.getAccountId());
+
+            DepositAndWithdrawal depositAndWithdrawal = new DepositAndWithdrawal();
+
+            depositAndWithdrawal.setRealizationDateTime(LocalDateTime.now());
+            depositAndWithdrawal.setAmount(depositAndWithdrawalRequestDTO.getAmount());
+            depositAndWithdrawal.setDescription(depositAndWithdrawalRequestDTO.getDescription());
+            depositAndWithdrawal.setCashier(depositAndWithdrawalRequestDTO.getCashier());
+            depositAndWithdrawal.setAccount(account);
+
+            BigDecimal currentBalance = account.getCurrentBalance();
+            BigDecimal newBalance = currentBalance.add(depositAndWithdrawalRequestDTO.getAmount());
+            accountService.updateBalance(depositAndWithdrawalRequestDTO.getAccountId(), newBalance);
+
+            movementRepository.save(depositAndWithdrawal);
+        } else {
+            throw new RuntimeException("No puede ingresar un número negativo");
+        }
+
+    }
 
 
 }
