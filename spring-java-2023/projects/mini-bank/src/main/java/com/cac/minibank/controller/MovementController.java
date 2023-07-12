@@ -2,7 +2,12 @@ package com.cac.minibank.controller;
 
 import com.cac.minibank.dto.request.movement.DepositAndWithdrawalRequestDTO;
 import com.cac.minibank.dto.response.MovementResponseDTO;
+import com.cac.minibank.exceptions.AccountException;
+import com.cac.minibank.exceptions.BadRequestException;
+import com.cac.minibank.exceptions.ResourceNotFoundException;
+import com.cac.minibank.response.ApiResponseHandler;
 import com.cac.minibank.service.MovementService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +24,7 @@ public class MovementController {
     }
 
     @GetMapping("/byId/{id}")
-    public MovementResponseDTO getMovementById(@PathVariable Long id){
+    public MovementResponseDTO getMovementById(@PathVariable Long id) throws ResourceNotFoundException {
         return movementService.findById(id);
     }
 
@@ -29,17 +34,29 @@ public class MovementController {
     }
 
     @PostMapping("/deposit")
-    public ResponseEntity<String> deposit(@RequestBody DepositAndWithdrawalRequestDTO depositAndWithdrawalRequestDTO){
-        movementService.deposit(depositAndWithdrawalRequestDTO);
-
-        return ResponseEntity.ok("Deposit succesful");
+    public ResponseEntity<?> deposit(@RequestBody DepositAndWithdrawalRequestDTO depositAndWithdrawalRequestDTO) {
+        try {
+            movementService.deposit(depositAndWithdrawalRequestDTO);
+            return ApiResponseHandler.generateResponse("Deposit successful", HttpStatus.OK, null);
+        } catch (BadRequestException ex) {
+            return ApiResponseHandler.generateResponseError(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (ResourceNotFoundException ex) {
+            return ApiResponseHandler.generateResponseError(ex.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("/withdrawal")
-    public ResponseEntity<String> withdrawal(@RequestBody DepositAndWithdrawalRequestDTO depositAndWithdrawalRequestDTO){
-        movementService.withdrawal(depositAndWithdrawalRequestDTO);
-
-        return ResponseEntity.ok("Withdrawal succesful");
+    public ResponseEntity<?> withdrawal(@RequestBody DepositAndWithdrawalRequestDTO depositAndWithdrawalRequestDTO) {
+        try {
+            movementService.withdrawal(depositAndWithdrawalRequestDTO);
+            return ApiResponseHandler.generateResponse("Withdrawal succesful", HttpStatus.OK, null);
+        } catch (BadRequestException ex) {
+            return ApiResponseHandler.generateResponseError(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (ResourceNotFoundException ex) {
+            return ApiResponseHandler.generateResponseError(ex.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (AccountException ex){
+            return ApiResponseHandler.generateResponseError(ex.getMessage(), HttpStatus.FORBIDDEN);
+        }
     }
 
 }
