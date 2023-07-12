@@ -7,6 +7,7 @@ import com.cac.minibank.exceptions.BadRequestException;
 import com.cac.minibank.exceptions.ResourceNotFoundException;
 import com.cac.minibank.response.ApiResponseHandler;
 import com.cac.minibank.service.MovementService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class MovementController {
     }
 
     @PostMapping("/deposit")
-    public ResponseEntity<?> deposit(@RequestBody DepositAndWithdrawalRequestDTO depositAndWithdrawalRequestDTO) {
+    public ResponseEntity<?> deposit(@Valid @RequestBody DepositAndWithdrawalRequestDTO depositAndWithdrawalRequestDTO) {
         try {
             movementService.deposit(depositAndWithdrawalRequestDTO);
             return ApiResponseHandler.generateResponse("Deposit successful", HttpStatus.OK, null);
@@ -46,7 +47,7 @@ public class MovementController {
     }
 
     @PostMapping("/withdrawal")
-    public ResponseEntity<?> withdrawal(@RequestBody DepositAndWithdrawalRequestDTO depositAndWithdrawalRequestDTO) {
+    public ResponseEntity<?> withdrawal(@Valid @RequestBody DepositAndWithdrawalRequestDTO depositAndWithdrawalRequestDTO) {
         try {
             movementService.withdrawal(depositAndWithdrawalRequestDTO);
             return ApiResponseHandler.generateResponse("Withdrawal succesful", HttpStatus.OK, null);
