@@ -10,6 +10,13 @@ import java.util.stream.Collectors;
 
 @Component
 public class CustomerMapper {
+
+    private final AddressMapper addressMapper;
+
+    public CustomerMapper(AddressMapper addressMapper) {
+        this.addressMapper = addressMapper;
+    }
+
     public CustomerResponseDTO toDto(Customer customer){
         if (customer == null) {
             return null;
@@ -21,7 +28,7 @@ public class CustomerMapper {
         customerResponseDTO.setSurname(customer.getSurname());
         customerResponseDTO.setPhone(customer.getPhone());
         customerResponseDTO.setEmail(customer.getEmail());
-        customerResponseDTO.setAddress(customer.getAddress());
+        customerResponseDTO.setAddressDTO(addressMapper.toDto(customer.getAddress()));
 
         List<Long> accountsId = customer.getAccounts()
                 .stream()
