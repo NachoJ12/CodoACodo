@@ -1,6 +1,7 @@
 package com.cac.minibank.model;
 
 import com.cac.minibank.model.movement.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -22,7 +23,6 @@ import java.util.List;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     private Long accountId;
     @NotNull
     private Long number;
@@ -49,6 +49,7 @@ public class Account {
     private List<Customer> jointAccountHolders;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "account_id")
+    @JsonIgnore
     private List<Movement> movements;
 
 
