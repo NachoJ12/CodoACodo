@@ -161,4 +161,14 @@ public class MovementService {
 
     }
 
+    public List<MovementResponseDTO> getMovementsByAccountId(Long accountId){
+        List<Movement> movements = movementRepository.findMovementsByAccountAccountId(accountId);
+
+        List<MovementResponseDTO> movementsResponseDTOs = movements
+                .stream().map(movementMapper::toDto)
+                .collect(Collectors.toList());
+
+        return movementsResponseDTOs;
+    }
+
 }

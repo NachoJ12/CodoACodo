@@ -75,4 +75,10 @@ public class MovementController {
         }
     }
 
+    @GetMapping("/account/{accountId}")
+    public ResponseEntity<List<MovementResponseDTO>> getMovementsByAccountId(@PathVariable Long accountId) {
+        List<MovementResponseDTO> movements = movementService.getMovementsByAccountId(accountId);
+        return ResponseEntity.ok(movements);
+    }
+
 }
