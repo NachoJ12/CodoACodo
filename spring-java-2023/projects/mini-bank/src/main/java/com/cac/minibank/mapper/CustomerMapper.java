@@ -1,7 +1,9 @@
 package com.cac.minibank.mapper;
 
+import com.cac.minibank.dto.request.CustomerRequestDTO;
 import com.cac.minibank.dto.response.CustomerResponseDTO;
 import com.cac.minibank.model.Account;
+import com.cac.minibank.model.Address;
 import com.cac.minibank.model.Customer;
 import org.springframework.stereotype.Component;
 
@@ -45,6 +47,23 @@ public class CustomerMapper {
 
         return customerResponseDTO;
 
+    }
+
+    public Customer toEntity(CustomerRequestDTO customerRequestDTO) {
+        if (customerRequestDTO == null) {
+            return null;
+        }
+
+        Customer customer = new Customer();
+        customer.setName(customerRequestDTO.getName());
+        customer.setSurname(customerRequestDTO.getSurname());
+        customer.setPhone(customerRequestDTO.getPhone());
+        customer.setEmail(customerRequestDTO.getEmail());
+
+        Address address = addressMapper.toEntity(customerRequestDTO.getAddress());
+        customer.setAddress(address);
+
+        return customer;
     }
 
 }

@@ -24,4 +24,21 @@ public class AddressMapper {
         return addressDTO;
     }
 
+    public Address toEntity(AddressDTO addressDTO) {
+        if (addressDTO == null) {
+            return null;
+        }
+
+        Address address = new Address();
+        address.setStreet(addressDTO.getStreet());
+        address.setCivicNumber(addressDTO.getCivicNumber());
+        address.setApartment(addressDTO.getApartment());
+        address.setFloor(addressDTO.getFloor());
+        address.setCity(addressDTO.getCity());
+        address.setZipCode(addressDTO.getZipCode());
+        address.setProvince(addressDTO.getProvince());
+
+        return address;
+    }
+
 }
