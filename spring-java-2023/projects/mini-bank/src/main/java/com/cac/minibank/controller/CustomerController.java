@@ -1,8 +1,9 @@
 package com.cac.minibank.controller;
 
+import com.cac.minibank.dto.request.CustomerRequestDTO;
 import com.cac.minibank.dto.response.CustomerResponseDTO;
-import com.cac.minibank.model.Customer;
 import com.cac.minibank.service.CustomerService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +20,8 @@ public class CustomerController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createCustomerWithAddress(@RequestBody Customer customer) {
-        customerService.createCustomerWithAddress(customer);
+    public ResponseEntity<String> createCustomerWithAddress(@Valid @RequestBody CustomerRequestDTO customerRequestDTO) {
+        customerService.createCustomerWithAddress(customerRequestDTO);
 
         return ResponseEntity.ok("Customer created with Address");
     }
