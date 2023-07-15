@@ -1,6 +1,7 @@
 package com.cac.minibank.service;
 
 import com.cac.minibank.dto.request.movement.DepositAndWithdrawalRequestDTO;
+import com.cac.minibank.dto.request.movement.OutgoingTransferRequestDTO;
 import com.cac.minibank.dto.response.MovementResponseDTO;
 import com.cac.minibank.exceptions.AccountException;
 import com.cac.minibank.exceptions.BadRequestException;
@@ -12,6 +13,7 @@ import com.cac.minibank.model.movement.*;
 import com.cac.minibank.repository.AccountRepository;
 import com.cac.minibank.repository.MovementRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -116,5 +118,47 @@ public class MovementService {
 
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    public void transfer(OutgoingTransferRequestDTO outgoingTransferRequestDTO) throws ResourceNotFoundException, BadRequestException, AccountException {
+        Account originAccount = accountRepository.getAccountByAccountId(outgoingTransferRequestDTO.getAccountId());
+        Account destinationAccount = accountRepository.getAccountByAccountId(outgoingTransferRequestDTO.getDestinationAccountId());
+
+        if(originAccount == null || destinationAccount == null){
+            throw new ResourceNotFoundException(MessageError.ACCOUNT_ID_NOT_FOUND);
+        }
+
+        BigDecimal currentBalance = originAccount.getCurrentBalance();
+        BigDecimal amountToTransfer = outgoingTransferRequestDTO.getAmount();
+
+        if(amountToTransfer.compareTo(BigDecimal.ZERO) < 0){
+            throw new BadRequestException(MessageError.NEGATIVE_NUMBER_NOT_ALLOWED);
+        }
+        if(currentBalance.compareTo(amountToTransfer) < 0){
+            throw new AccountException(MessageError.ACCOUNT_NOT_HAVE_FUNDS);
+        }
+
+        OutgoingTransfer outgoingTransfer = new OutgoingTransfer();
+        outgoingTransfer.setRealizationDateTime(LocalDateTime.now());
+        outgoingTransfer.setAmount(amountToTransfer.negate());
+        outgoingTransfer.setDescription(outgoingTransferRequestDTO.getDescription());
+        outgoingTransfer.setAccount(originAccount);
+        outgoingTransfer.setDestinationAccount(destinationAccount);
+
+        IncomingTransfer incomingTransfer = new IncomingTransfer();
+        incomingTransfer.setRealizationDateTime(LocalDateTime.now());
+        incomingTransfer.setAmount(amountToTransfer);
+        incomingTransfer.setDescription(outgoingTransferRequestDTO.getDescription());
+        incomingTransfer.setAccount(destinationAccount);
+        incomingTransfer.setSourceAccount(originAccount);
+
+        BigDecimal newBalance = currentBalance.subtract(amountToTransfer);
+
+        accountService.updateBalance(originAccount.getAccountId(), newBalance);
+        accountService.updateBalance(destinationAccount.getAccountId(), amountToTransfer);
+
+        movementRepository.save(outgoingTransfer);
+        movementRepository.save(incomingTransfer);
+
+    }
 
 }

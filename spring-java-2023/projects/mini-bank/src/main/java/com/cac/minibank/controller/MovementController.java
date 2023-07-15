@@ -1,6 +1,7 @@
 package com.cac.minibank.controller;
 
 import com.cac.minibank.dto.request.movement.DepositAndWithdrawalRequestDTO;
+import com.cac.minibank.dto.request.movement.OutgoingTransferRequestDTO;
 import com.cac.minibank.dto.response.MovementResponseDTO;
 import com.cac.minibank.exceptions.AccountException;
 import com.cac.minibank.exceptions.BadRequestException;
@@ -57,6 +58,20 @@ public class MovementController {
             return ApiResponseHandler.generateResponseError(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (AccountException ex){
             return ApiResponseHandler.generateResponseError(ex.getMessage(), HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @PostMapping("/transfer")
+    public ResponseEntity<?> transfer(@Valid @RequestBody OutgoingTransferRequestDTO outgoingTransferRequestDTO){
+        try{
+            movementService.transfer(outgoingTransferRequestDTO);
+            return ApiResponseHandler.generateResponse("Transfer succesful", HttpStatus.OK, null);
+        } catch (AccountException ex) {
+            return ApiResponseHandler.generateResponseError(ex.getMessage(), HttpStatus.FORBIDDEN);
+        } catch (BadRequestException ex) {
+            return ApiResponseHandler.generateResponseError(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (ResourceNotFoundException ex) {
+            return ApiResponseHandler.generateResponseError(ex.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
